@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Remoto</title>
+</head>
+<body>
+    <h1>Control del Servidor</h1>
+    <button onclick="enviarComando('chat:Hola desde el cliente')">Enviar mensaje de chat</button>
+    <button onclick="enviarComando('captura')">Capturar pantalla</button>
+    <button onclick="enviarComando('bloquear')">Bloquear teclado y mouse</button>
+    <button onclick="enviarComando('desbloquear')">Desbloquear teclado y mouse</button>
+    <button onclick="enviarComando('apagar')">Apagar PC</button>
+    <button onclick="enviarComando('bloquear_web:example.com')">Bloquear example.com</button>
+    <button onclick="enviarComando('permitir_ping')">Permitir Ping</button>
+    <button onclick="enviarComando('denegar_ping')">Denegar Ping</button>
+
+    <script>
+        function enviarComando(comando) {
+            fetch('/enviar_comando', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ comando: comando })
+            })
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
